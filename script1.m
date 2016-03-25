@@ -27,7 +27,7 @@ tag_data_v_upper_bound = 30;
 detected_tag_zero = 0;
 result_tag_message = '';
 
-tag_reader_message = 'd011111111111111111';
+tag_reader_message = 'd011111111111111111;d1100000111111111111111110011111110101011';
 tag_message = '1010v1001101000000000000000000001101001011000000000111000100000101101111000100000000000000000000000000000000000000001111000101100101'
 %message pre-ambles
 % query_rep = '00';
@@ -56,11 +56,7 @@ end
 send_threshold_y = ((y_min + y_max) / 2);
 send_threshold_y;
 
-%calculate reader start and end of frame
-
-
 %decode tag reader message
-%for i= 1:2650
 for i = 1:1:length(e01)
 	%below threshold
     if e01(i) < send_threshold_y					
@@ -94,7 +90,6 @@ for i = 1:1:length(e01)
         %split data when new tag reader packet is comming
         elseif(threshold_pass_diff > RTcal_size_upper_bound_x)
             result_tag_reader_message = strcat(result_tag_reader_message,';');
-            
             RTcal_found = 0;
 		end
 		last_threshold_pass = current_threshold_pass;
@@ -140,7 +135,6 @@ for i= 2650:5000
 		last_threshold_pass = current_threshold_pass;
 	end
 end
-
 
 fprintf('Tag message: %s \n', result_tag_message);
 
