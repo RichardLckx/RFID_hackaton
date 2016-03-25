@@ -99,7 +99,8 @@ end
 fprintf('Reader message: %s \n', result_tag_reader_message);
 
 %decode tag message
-for i= 2:1:length(e01)
+for i= 2650:5000
+%for i= 2:1:length(e01)
     %passing the threshold
 	if e01(i) < tag_threshold					
 		if last_threshold_pass == 0
@@ -127,10 +128,10 @@ for i= 2:1:length(e01)
 			result_tag_message = strcat(result_tag_message, '1');
 		elseif ((threshold_pass_diff < tag_data_v_upper_bound) && (threshold_pass_diff > tag_data_v_lower_bound)) 
 			%The value 0 before v misses a flank, but the zero is there so we add it here. (unique size of v)
-            result_tag_message = strcat(result_tag_message, '0v');			
+            result_tag_message = strcat(result_tag_message, '0v');		
 		elseif (((threshold_pass_diff/2) < tag_data_one_upper_bound) && ((threshold_pass_diff/2) > tag_data_one_lower_bound))
 			%might a value 1v appear, we notice it if the flanks are twice the size of a normal 1
-            result_tag_message = strcat(result_tag_message, '1v');			
+            result_tag_message = strcat(result_tag_message, '1v');
 		end 
 		last_threshold_pass = current_threshold_pass;
 	end
