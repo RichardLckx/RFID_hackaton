@@ -38,7 +38,22 @@ result_tag = '';
 % read = '11000010';
 % write = '11000011';
 
+%calculate reader y treshold
+y_min = 20;
+y_max = 0;
+for i = 1:1:length(e01)
+    if(e01(i) < y_min)
+        y_min = e01(i);
+    end
+    if(e01(i) > y_max)
+        y_max = e01(i);
+    end
+end
 
+send_threshold_y = ((y_min + y_max) / 2);
+send_threshold_y;
+
+%decode reader message
 for i= 1:2650
 	%below threshold
     if e01(i) < send_threshold_y					
@@ -76,6 +91,7 @@ end
 
 fprintf('Reader message: %s \n', result_send);
 
+%decode tag message
 for i= 2650:5000
     %passing the threshold
 	if e01(i) < tag_threshold					
@@ -114,3 +130,4 @@ for i= 2650:5000
 end
 
 fprintf('Tag message: %s \n', result_tag);
+
