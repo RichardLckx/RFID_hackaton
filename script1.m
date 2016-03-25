@@ -6,12 +6,12 @@ send_threshold_y = 0.35;
 sample_threshold_send = 1;
 
 last_threshold_pass = 0;
-bit_zero_lower_bound = 40;
-bit_zero_upper_bound = 60;
-bit_one_lower_bound = 70;
-bit_one_upper_bound = 100;
-RTcal_size_lower_bound = 145;
-RTcal_size_upper_bound = 165;
+bit_zero_lower_bound_x = 40;
+bit_zero_upper_bound_x = 60;
+bit_one_lower_bound_x = 70;
+bit_one_upper_bound_x = 100;
+RTcal_size_lower_bound_x = 145;
+RTcal_size_upper_bound_x = 165;
 RTcal_found = 0;
 result_send = '';
 
@@ -46,6 +46,7 @@ for i= 1:2650
         if last_threshold_pass == 0 
 			last_threshold_pass = i;		
         end
+        
         %declining values, downward signal
         if ((e01(i-1) > e01(i)) && (e01(i-1) > send_threshold_y))				
 			current_threshold_pass = i;
@@ -53,15 +54,19 @@ for i= 1:2650
         %inclining values, upward signal
 		elseif (e01(i+1) > e01(i) && (e01(i+1) > send_threshold_y))			
 			current_threshold_pass = i+1;
-		end
+        end
 		
+        %get the distance between the last two times y was below the
+        %treshold?
 		threshold_pass_diff = current_threshold_pass - last_threshold_pass;
 		
-		if ((threshold_pass_diff < bit_zero_upper_bound) && (threshold_pass_diff > bit_zero_lower_bound) && (RTcal_found == 1))
+        %Search the corresponding binairy value that belongs to this distance, 
+        % gaurded by the upper and lower bounds
+		if ((threshold_pass_diff < bit_zero_upper_bound_x) && (threshold_pass_diff > bit_zero_lower_bound_x) && (RTcal_found == 1))
 			result_send = strcat(result_send, '0');
-		elseif ((threshold_pass_diff < bit_one_upper_bound) && (threshold_pass_diff > bit_one_lower_bound) && (RTcal_found == 1))
+		elseif ((threshold_pass_diff < bit_one_upper_bound_x) && (threshold_pass_diff > bit_one_lower_bound_x) && (RTcal_found == 1))
 			result_send = strcat(result_send, '1');
-		elseif ((threshold_pass_diff < RTcal_size_upper_bound) && (threshold_pass_diff > RTcal_size_lower_bound))
+		elseif ((threshold_pass_diff < RTcal_size_upper_bound_x) && (threshold_pass_diff > RTcal_size_lower_bound_x))
 			result_send = strcat(result_send,'d');
 			RTcal_found = 1;
 		end
