@@ -91,9 +91,9 @@ for i = 1:1:length(e01)
 		elseif ((threshold_pass_diff < RTcal_size_upper_bound_x) && (threshold_pass_diff > RTcal_size_lower_bound_x))
 			result_tag_reader_message = strcat(result_tag_reader_message,'d');
 			RTcal_found = 1;
-        %split data when new tag reader packet is comming
+        %append End of Message if nothing new is comming
         elseif(threshold_pass_diff > RTcal_size_upper_bound_x)
-            result_tag_reader_message = strcat(result_tag_reader_message,';');
+            result_tag_reader_message = strcat(result_tag_reader_message,'EOM');
             
             RTcal_found = 0;
 		end
