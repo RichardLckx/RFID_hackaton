@@ -99,7 +99,7 @@ end
 fprintf('Reader message: %s \n', result_tag_reader_message);
 
 %decode tag message
-for i= 2650:5000
+for i= 2:1:length(e01)
     %passing the threshold
 	if e01(i) < tag_threshold					
 		if last_threshold_pass == 0
@@ -141,7 +141,7 @@ fprintf('Tag message: %s \n', result_tag_message);
 reader_check = strcmp(tag_reader_message, result_tag_reader_message);
 tag_check = strcmp(tag_message, result_tag_reader_message);
 
-if ((reader_check == 0) && (tag_check == 0))
+if ((reader_check == 0) || (tag_check == 0))
     fprintf('error! data incorrect');
     result_tag_message
     tag_message
